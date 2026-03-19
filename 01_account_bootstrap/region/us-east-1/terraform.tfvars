@@ -1,0 +1,5 @@
+org_prefix                  = "thoughtbulls"
+platform                    = "dp"
+region                      = "us-east-1"
+databricks_account_id       = "b48aa263-aeb5-4d0d-aa8c-85e35d5ac470"
+databricks_account_root_arn = "arn:aws:iam::414351767826:root"
