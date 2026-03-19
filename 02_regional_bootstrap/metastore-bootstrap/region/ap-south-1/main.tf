@@ -1,14 +1,18 @@
 resource "databricks_metastore_data_access" "uc_access" {
+  provider     = databricks.account
   metastore_id = data.terraform_remote_state.metastore.outputs.metastore_id
   name         = "uc-root-access-${var.region}"
 
   aws_iam_role {
-    role_arn = data.terraform_remote_state.account.outputs.uc_storage_role_arn
+    role_arn = data.terraform_remote_state.account.outputs.uc_runtime_role_arn[var.region]
   }
 
   is_default = true
-}
 
+  lifecycle {
+    ignore_changes = [name]
+  }
+}
 
 
 module "storage" {

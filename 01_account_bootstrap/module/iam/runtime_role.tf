@@ -1,8 +1,12 @@
 #############################################################################################
 # Storage unity catalog IAM ROLES
 #############################################################################################
-resource "aws_iam_role" "uc_storage_role" {
-  name = "dp-${var.environment}-uc-storage-role"
+resource "aws_iam_role" "uc_runtime_role" {
+  name = "${var.org_prefix}-${var.platform}-uc-runtime-role-${var.region}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

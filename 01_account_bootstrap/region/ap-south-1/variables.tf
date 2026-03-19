@@ -1,4 +1,12 @@
-variable "environment" {
+variable "org_prefix" {
+  type = string
+}
+
+variable "platform" {
+  type = string
+}
+
+variable "region" {
   type = string
 }
 

@@ -25,7 +25,3 @@ provider "databricks" {
   account_id = var.databricks_account_id
 }
 
-provider "databricks" {
-  alias = "workspace"
-  host  = "https://dbc-ad1bd582-932a.cloud.databricks.com/"
-}

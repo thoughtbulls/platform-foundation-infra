@@ -1,12 +1,25 @@
 resource "databricks_metastore_data_access" "uc_access" {
-  metastore_id = data.terraform_remote_state.metastore.outputs.metastore_id
+  metastore_id = module.metastore.metastore_id
   name         = "uc-root-access-${var.region}"
 
   aws_iam_role {
-    role_arn = data.terraform_remote_state.account.outputs.uc_storage_role_arn
+    role_arn = data.terraform_remote_state.account.outputs.uc_runtime_role_arn[var.region]
   }
 
-  is_default = true
+  is_default = false
+  force_destroy = true
+}
+
+resource "databricks_metastore_data_access" "temp_delete" {
+  provider     = databricks.account
+  metastore_id = "1addbc5f-4272-42d7-b21a-9e342961d099"
+  name         = "uc-root-access-us-east-1"
+
+  aws_iam_role {
+    role_arn = data.terraform_remote_state.account.outputs.uc_runtime_role_arn["us-east-1"]
+  }
+
+  force_destroy = true
 }
 
 module "storage" {

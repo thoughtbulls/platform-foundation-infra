@@ -1,8 +1,8 @@
 #############################################################################################
 # Storage unity catalog IAM Policy
 #############################################################################################
-resource "aws_iam_policy" "uc_storage_policy" {
-  name = "dp-${var.environment}-uc-storage-policy"
+resource "aws_iam_policy" "uc_runtime_policy" {
+  name = "${var.org_prefix}-${var.platform}-uc-runtime-policy-${var.region}"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -10,7 +10,7 @@ resource "aws_iam_policy" "uc_storage_policy" {
       {
         Effect   = "Allow"
         Action   = ["s3:ListBucket"]
-        Resource = "arn:aws:s3:::dp-*-uc-*"
+        Resource = "arn:aws:s3:::${var.org_prefix}-${var.platform}-*-uc-*"
       },
       {
         Effect = "Allow"
@@ -21,16 +21,17 @@ resource "aws_iam_policy" "uc_storage_policy" {
           "s3:PutObjectAcl",
           "s3:GetBucketLocation"
         ]
-        Resource = "arn:aws:s3:::dp-*-uc-*/*"
+        Resource = "arn:aws:s3:::${var.org_prefix}-${var.platform}-*-uc-*/*"
       }
     ]
   })
 }
 
+
 #############################################################################################
 # Storage role and policy attachment
 #############################################################################################
-resource "aws_iam_role_policy_attachment" "storage_role_attach_policy" {
-  role       = aws_iam_role.uc_storage_role.name
-  policy_arn = aws_iam_policy.uc_storage_policy.arn
+resource "aws_iam_role_policy_attachment" "runtime_role_attach_policy" {
+  role       = aws_iam_role.uc_runtime_role.name
+  policy_arn = aws_iam_policy.uc_runtime_policy.arn
 }
