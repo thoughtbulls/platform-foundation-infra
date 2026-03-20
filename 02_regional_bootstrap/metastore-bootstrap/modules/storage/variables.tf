@@ -6,6 +6,6 @@ variable "region" {
   
 }
 
-variable "environment" {
+variable "metastore_name_prefix" {
  
 }

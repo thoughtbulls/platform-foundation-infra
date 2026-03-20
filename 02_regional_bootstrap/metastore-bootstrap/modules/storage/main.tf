@@ -9,12 +9,11 @@ resource "random_id" "bucket" {
 # creating deltalake root bucket
 #############################################################################################
 resource "aws_s3_bucket" "uc" {
-  bucket = "dp-${var.environment}-uc-${random_id.bucket.hex}"
+  bucket = "${var.metastore_name_prefix}-${var.region}-${random_id.bucket.hex}"
   force_destroy = true
 
   tags = {
     Purpose = "unity catalog"
-    Env     = var.environment
   }
 }
 
